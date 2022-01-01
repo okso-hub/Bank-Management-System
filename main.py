@@ -12,8 +12,13 @@ def create_account(name, birthday, balance, address):
     x = 0
     new_birthday = ""
     for i in range(len(birthday)):
-        if (x % 2) == 0:
-            new_birthday += birthday[i] + "."
+        if (x % 2) != 0:
+            if x < 4:
+                new_birthday += birthday[i] + "."
+            else:
+                new_birthday += birthday[i]
+        else:
+            new_birthday += birthday[i]
         x += 1
         print(new_birthday)
     
@@ -21,7 +26,7 @@ def create_account(name, birthday, balance, address):
     # Saving information on a textfile
     with open(f"{name}.txt", "w") as f:
         f.write(f"Name: {name}\n")
-        f.write(f"Date of birth: {birthday}\n")
+        f.write(f"Date of birth: {new_birthday}\n")
         f.write(f"Address: {address}\n")
         f.write(f"Balance: {balance}\n")
         f.write(f"IBAN: {IBAN}\n")
