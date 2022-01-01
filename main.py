@@ -1,10 +1,18 @@
 from random import randint
 import os
+from types import CodeType
 
-clear = lambda: os.system("clear") if os.name == "posix" else os.system("cls")
+
+def clear(): return os.system("clear") if os.name == "posix" else os.system("cls")
 
 
 def create_account(name, birthday, balance, address):
+    # Generating the login code
+    global code
+    code = ""
+    for i in range(4):
+        code += str(randint(0, 9))
+    int(code)
 
     # Generating the IBAN
     iban = ""
@@ -24,13 +32,13 @@ def create_account(name, birthday, balance, address):
         else:
             new_birthday += birthday[i]
         x += 1
-    
 
     # Saving information on a textfile
     with open(f"{name}.txt", "w") as f:
         f.write(f"Name: {name}\n")
         f.write(f"Date of birth: {new_birthday}\n")
         f.write(f"Address: {address}\n")
+        f.write(f"Code: {code}\n")
         f.write(f"Balance: {balance}\n")
         f.write(f"IBAN: {IBAN}\n")
 
@@ -60,4 +68,3 @@ if __name__ == "__main__":
         str(input("Enter the country you live in: "))
     )
     # main()
-
