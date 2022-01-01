@@ -1,4 +1,8 @@
 from random import randint
+import os
+
+clear = lambda: os.system("clear") if os.name == "posix" else os.system("cls")
+
 
 def create_account(name, birthday, balance, address):
 
@@ -20,7 +24,6 @@ def create_account(name, birthday, balance, address):
         else:
             new_birthday += birthday[i]
         x += 1
-        print(new_birthday)
     
 
     # Saving information on a textfile
@@ -49,6 +52,12 @@ def main():
 
 
 if __name__ == "__main__":
-    create_account("test", "150108", 5000, "Germany")
+    clear()
+    create_account(
+        str(input("Enter your full name: ")),
+        str(input("Enter your birthday (ddmmyy): ")),
+        int(input("Enter your balance: ")),
+        str(input("Enter the country you live in: "))
+    )
     # main()
 
