@@ -43,7 +43,6 @@ def create_account(name, birthday, balance, address):
 
 
 def log_in(name, input_code):
-    print(name)
     try:
         with open(f"{name}.txt", "r") as f:
             lines = f.readlines()
@@ -73,10 +72,6 @@ def deposit():
 
 
 def main():
-    pass
-
-
-if __name__ == "__main__":
     clear()
     # create_account(
     #     str(input("Enter your full name: ")),
@@ -90,4 +85,6 @@ if __name__ == "__main__":
         int(input("Enter four digit code: "))
     )
 
-    # main()
+
+if __name__ == "__main__":
+    main()
