@@ -43,6 +43,8 @@ def create_account(name, birthday, balance, address):
 
 
 def log_in(name, input_code):
+    global account_name
+    account_name = name
     try:
         with open(f"{name}.txt", "r") as f:
             lines = f.readlines()
@@ -63,8 +65,27 @@ def log_in(name, input_code):
         print("Account does not exist.")
 
 
-def withdraw():
-    pass
+def withdraw(withdraw_amount):
+    with open(f"{account_name}.txt", "r") as f:
+        lines = f.readlines()
+
+        balance_line = lines[4]
+        split_balance_line = balance_line.split(" ")
+        balance = split_balance_line[1].replace("\n", "")
+
+        int_balance = int(balance)
+
+        int_balance -= withdraw_amount
+    
+
+    lines[4] = f"Balance: {int_balance}\n"
+
+
+    with open(f"{account_name}.txt", "w") as f:
+        f.writelines(lines)
+
+    print(f"Success! Your balance is {int_balance}.")
+
 
 
 def deposit():
@@ -84,6 +105,7 @@ def main():
         str(input("Enter your name: ")),
         int(input("Enter four digit code: "))
     )
+    withdraw(int(input("Enter withdraw amount: ")))
 
 
 if __name__ == "__main__":
