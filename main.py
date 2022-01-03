@@ -30,8 +30,11 @@ def create_account(name, birthday, balance, address):
 
 
 def log_in(name, input_code):
+    # Setting a global account name for login
     global account_name
     account_name = name
+
+    # Reading and outputting the information
     try:
         with open(f"{name}.txt", "r") as f:
             lines = f.readlines()
@@ -53,6 +56,7 @@ def log_in(name, input_code):
 
 
 def withdraw(withdraw_amount):
+    # Reading the balance from textfile
     with open(f"{account_name}.txt", "r") as f:
         lines = f.readlines()
 
@@ -64,13 +68,13 @@ def withdraw(withdraw_amount):
 
         int_balance -= withdraw_amount
     
-
+    # Updating balance on textfile
     lines[4] = f"Balance: {int_balance}\n"
-
 
     with open(f"{account_name}.txt", "w") as f:
         f.writelines(lines)
 
+    # Outputting balance
     print(f"Success! Your balance is {int_balance}.")
 
 
