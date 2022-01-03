@@ -79,12 +79,30 @@ def withdraw(withdraw_amount):
 
 
 
-def deposit():
-    pass
+def deposit(deposit_amount):
+    # Reading the balance from textfile
+    with open(f"{account_name}.txt", "r") as f:
+        lines = f.readlines()
+
+        balance_line = lines[4]
+        split_balance_line = balance_line.split(" ")
+        balance = split_balance_line[1].replace("\n", "")
+
+        int_balance = int(balance)
+
+        int_balance += deposit_amount
+    
+    # Updating balance on textfile
+    lines[4] = f"Balance: {int_balance}\n"
+
+    with open(f"{account_name}.txt", "w") as f:
+        f.writelines(lines)
+
+    # Outputting balance
+    print(f"Success! Your balance is {int_balance}.")
 
 
 def main():
-    clear()
     # create_account(
     #     str(input("Enter your full name: ")),
     #     str(input("Enter your birthday (ddmmyy): ")),
@@ -100,4 +118,5 @@ def main():
 
 
 if __name__ == "__main__":
+    clear()
     main()
