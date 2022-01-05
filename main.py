@@ -48,6 +48,7 @@ def log_in(name, input_code):
             code = int(split_code_line[1])
 
         if input_code == code:
+            clear()
             print(f"Success. Welcome, {name} your balance is {balance}.")
         else:
             print("Failure. Wrong code.")
@@ -75,6 +76,7 @@ def withdraw(withdraw_amount):
         f.writelines(lines)
 
     # Outputting balance
+    clear()
     print(f"Success! Your balance is {int_balance}.")
 
 
@@ -103,20 +105,56 @@ def deposit(deposit_amount):
 
 
 def main():
-    # create_account(
-    #     str(input("Enter your full name: ")),
-    #     str(input("Enter your birthday (ddmmyy): ")),
-    #     int(input("Enter your balance: ")),
-    #     str(input("Enter the country you live in: "))
-    # )
+    run = True
+    while run:
+        clear()
+        print("--- ATM Please select an option to continue ---")
+        print("1. Create a new account \n2. Log in to an existing account")
+        mode = int(input(""))
 
-    log_in(
-        str(input("Enter your name: ")),
-        int(input("Enter four digit code: "))
-    )
-    withdraw(int(input("Enter withdraw amount: ")))
+        if mode == 1:
+            clear()
+            create_account(
+                str(input("Enter your full name: ")),
+                str(input("Enter your birthday: ")),
+                int(input("Enter your balance: $")),
+                str(input("Enter the region you live in: "))
+            )
+
+            logged_in = True
+
+            while logged_in:
+                print("--- ATM Please select an option to continue ---")
+                print("1. Withdraw money from your bank account \n2. Deposit money to your bank account \n3. Log out")
+                option = int(input(""))
+
+                if option == 1:
+                    withdraw(int(input("Enter your withdraw amount: ")))
+                elif option == 2:
+                    deposit(int(input("Enter your deposit amount: ")))
+                elif option == 3:
+                    break
+        elif mode == 2:
+            clear()
+            log_in(
+                str(input("Enter your full name: ")),
+                int(input("Enter your code: "))
+            )
+
+            logged_in = True
+
+            while logged_in:
+                print("--- ATM Please select an option to continue ---")
+                print("1. Withdraw money from your bank account \n2. Deposit money to your bank account \n3. Log out")
+                option = int(input(""))
+
+                if option == 1:
+                    withdraw(int(input("Enter your withdraw amount: ")))
+                elif option == 2:
+                    deposit(int(input("Enter your deposit amount: ")))
+                elif option == 3:
+                    break
 
 
 if __name__ == "__main__":
-    clear()
     main()
