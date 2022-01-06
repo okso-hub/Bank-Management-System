@@ -4,12 +4,12 @@
 
 This program resembles an ATM. It will feature options such as:
 
-- Registration
-- Loggin into an account
-- withdraw money from an account
-- desposit money to an account
-- Changing the login code
-- Viewing account information
-- Transferring money to another account
+- [x] Registration
+- [x] Loggin into an account
+- [x] Withdraw money from an account
+- [x] Desposit money to an account
+- [x] Changing the login code
+- [ ] Viewing account information
+- [ ] Transferring money to another account
 
 All the information will be handled by creating files for each account and reading the needed data from it.
