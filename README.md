@@ -1,8 +1,6 @@
 # Bank Management System
 
-<span style="color:red">**[PROJECT STATUS NOT DONE]**</span>
-
-This program resembles an ATM. It will feature options such as:
+This program resembles an ATM. It features options such as:
 
 - [x] Registration
 - [x] Loggin into an account
@@ -12,4 +10,4 @@ This program resembles an ATM. It will feature options such as:
 - [x] Viewing account information
 - [x] Transferring money to another account
 
-All the information will be handled by creating files for each account and reading the needed data from it.
+All the information are handled by creating files for each account and reading the needed data from it.
