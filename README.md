@@ -10,6 +10,6 @@ This program resembles an ATM. It will feature options such as:
 - [x] Desposit money to an account
 - [x] Changing the login code
 - [x] Viewing account information
-- [ ] Transferring money to another account
+- [x] Transferring money to another account
 
 All the information will be handled by creating files for each account and reading the needed data from it.

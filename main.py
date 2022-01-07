@@ -136,8 +136,48 @@ def view_information():
     print(content)
 
 
-def transfer(destination_account):
-    pass
+def transfer(transfer_name, transfer_iban, transfer_amount):
+    with open(f"{account_name}.txt", "r") as f:
+        lines = f.readlines()
+        balance_line = lines[4]
+        split_balance_line = balance_line.split(" ")
+        balance = int(split_balance_line[1])
+
+    try:
+        with open(f"{transfer_name}.txt", "r") as f:
+            transfer_lines = f.readlines()
+            iban_line = transfer_lines[5]
+            split_iban_line = iban_line.split(" ")
+            iban = int(split_iban_line[2])
+
+            trasnfer_balance_line = transfer_lines[4]
+            split_balance_line = balance_line.split(" ")
+            transfer_balance = int(split_balance_line[1])
+
+        if transfer_iban == iban:
+            balance -= transfer_amount
+            lines[4] = f"Balance: {balance}\n"
+
+            transfer_balance += transfer_amount
+            transfer_lines[4] = f"Balance: {transfer_balance}\n"
+
+            with open(f"{account_name}.txt", "w") as f:
+                f.writelines(lines)
+            
+            with open(f"{transfer_name}.txt", "w") as f:
+                f.writelines(transfer_lines)
+            
+            clear()
+            print(f"You have successfully transferred ${transfer_amount} to {transfer_name}.")
+
+        else:
+            clear()
+            print("Wrong IBAN.")
+            return
+
+    except:
+        clear()
+        print("Destination account couldn't be found.")
 
 
 def main():
@@ -181,7 +221,7 @@ def main():
 
             while logged_in:
                 print("--- ATM Please select an option to continue ---")
-                print("1. Withdraw money from your bank account \n2. Deposit money to your bank account \n3. Change code \n4. View account information \n5. Log out")
+                print("1. Withdraw money from your bank account \n2. Deposit money to your bank account \n3. Change code \n4. View account information \n5. Transfer money \n6. Log out")
                 option = int(input(""))
 
                 if option == 1:
@@ -193,7 +233,13 @@ def main():
                 elif option == 4:
                     view_information()
                 elif option == 5:
-                    break
+                    transfer(
+                        str(input("Enter name of destination account: ")),
+                        int(input("Enter IBAN of destination account: ")),
+                        int(input("Enter transfer amount: "))
+                    )
+                elif option == 6:
+                    logged_in = False
 
         elif mode == 3:
             break
