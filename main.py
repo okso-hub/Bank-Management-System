@@ -129,7 +129,11 @@ def change_code(old_code):
 
 
 def view_information():
-    pass
+    with open(f"{account_name}.txt", "r") as f:
+        content = f.read()
+
+    clear()
+    print(content)
 
 
 def transfer(destination_account):
@@ -177,7 +181,7 @@ def main():
 
             while logged_in:
                 print("--- ATM Please select an option to continue ---")
-                print("1. Withdraw money from your bank account \n2. Deposit money to your bank account \n3. Change code \n4. Log out")
+                print("1. Withdraw money from your bank account \n2. Deposit money to your bank account \n3. Change code \n4. View account information \n5. Log out")
                 option = int(input(""))
 
                 if option == 1:
@@ -187,6 +191,8 @@ def main():
                 elif option == 3:
                     change_code(int(input("Enter your current code: ")))
                 elif option == 4:
+                    view_information()
+                elif option == 5:
                     break
 
         elif mode == 3:
