@@ -17,7 +17,17 @@ def create_account(name, birthday, balance, address):
     iban = ""
     for i in range(22):
         iban += str(randint(0, 9))
-    IBAN = f"DE {int(iban)}"
+    if address == "Germany":
+        IBAN = f"DE {int(iban)}"
+    elif address == "USA" or "US" or "America":
+        IBAN = f"US {int(iban)}"
+    
+    # Choosing the currency
+    global currency
+    if address.lower() == "germany":
+        currency = "€"
+    elif address.lower() == "usa" or "us" or "america":
+        currency = "$"
 
     # Saving information on a textfile
     with open(f"{name}.txt", "w") as f:
@@ -25,11 +35,11 @@ def create_account(name, birthday, balance, address):
         f.write(f"Date of birth: {birthday}\n")
         f.write(f"Address: {address}\n")
         f.write(f"Code: {code}\n")
-        f.write(f"Balance: ${balance}\n")
+        f.write(f"Balance: {currency}{balance}\n")
         f.write(f"IBAN: {IBAN}\n")
 
     clear()
-    print(f"Success. Welcome, {name} your balance is ${balance}.")
+    print(f"Success. Welcome, {name} your balance is {currency}{balance}.")
 
 
 def log_in(name, input_code):
@@ -44,7 +54,7 @@ def log_in(name, input_code):
 
             balance_line = lines[4]
             split_balance_line = balance_line.split(" ")
-            balance = split_balance_line[1].replace("\n", "").replace("$", "")
+            balance = split_balance_line[1].replace("\n", "").replace(f"{currency}", "")
 
             code_line = lines[3]
             split_code_line = code_line.split(" ")
@@ -52,7 +62,7 @@ def log_in(name, input_code):
 
         if input_code == code:
             clear()
-            print(f"Success. Welcome, {name} your balance is ${balance}.")
+            print(f"Success. Welcome, {name} your balance is {currency}{balance}.")
         else:
             print("Failure. Wrong code.")
     except:
@@ -66,21 +76,21 @@ def withdraw(withdraw_amount):
 
         balance_line = lines[4]
         split_balance_line = balance_line.split(" ")
-        balance = split_balance_line[1].replace("\n", "").replace("$", "")
+        balance = split_balance_line[1].replace("\n", "").replace(f"{currency}", "")
 
         int_balance = int(balance)
 
         int_balance -= withdraw_amount
 
     # Updating balance on textfile
-    lines[4] = f"Balance: ${int_balance}\n"
+    lines[4] = f"Balance: {currency}{int_balance}\n"
 
     with open(f"{account_name}.txt", "w") as f:
         f.writelines(lines)
 
     # Outputting balance
     clear()
-    print(f"Success! Your balance is ${int_balance}.")
+    print(f"Success! Your balance is {currency}{int_balance}.")
 
 
 def deposit(deposit_amount):
@@ -90,21 +100,21 @@ def deposit(deposit_amount):
 
         balance_line = lines[4]
         split_balance_line = balance_line.split(" ")
-        balance = split_balance_line[1].replace("\n", "").replace("$", "")
+        balance = split_balance_line[1].replace("\n", "").replace(f"{currency}", "")
 
         int_balance = int(balance)
 
         int_balance += deposit_amount
 
     # Updating balance on textfile
-    lines[4] = f"Balance: ${int_balance}\n"
+    lines[4] = f"Balance: {currency}{int_balance}\n"
 
     with open(f"{account_name}.txt", "w") as f:
         f.writelines(lines)
 
     # Outputting balance
     clear()
-    print(f"Success! Your balance is ${int_balance}.")
+    print(f"Success! Your balance is {currency}{int_balance}.")
 
 
 def change_code(old_code):
@@ -125,8 +135,7 @@ def change_code(old_code):
             f.writelines(lines)
 
         clear()
-        print(
-            f"Success! You successfully changed your code from {code} to {new_code}.")
+        print(f"Success! You successfully changed your code from {code} to {new_code}.")
     else:
         clear()
         print(f"{old_code} is not your current code. Please try again.")
@@ -145,7 +154,7 @@ def transfer(transfer_name, transfer_iban, transfer_amount):
         lines = f.readlines()
         balance_line = lines[4]
         split_balance_line = balance_line.split(" ")
-        balance = int(split_balance_line[1].replace("\n", "").replace("$", ""))
+        balance = int(split_balance_line[1].replace("\n", "").replace(f"{currency}", ""))
 
     try:
         with open(f"{transfer_name}.txt", "r") as f:
@@ -156,15 +165,14 @@ def transfer(transfer_name, transfer_iban, transfer_amount):
 
             transfer_balance_line = transfer_lines[4]
             split_balance_line = transfer_balance_line.split(" ")
-            transfer_balance = int(
-                split_balance_line[1].replace("\n", "").replace("$", ""))
+            transfer_balance = int(split_balance_line[1].replace("\n", "").replace(f"{currency}", ""))
 
         if transfer_iban == iban:
             balance -= transfer_amount
-            lines[4] = f"Balance: ${balance}\n"
+            lines[4] = f"Balance: {currency}{balance}\n"
 
             transfer_balance += transfer_amount
-            transfer_lines[4] = f"Balance: ${transfer_balance}\n"
+            transfer_lines[4] = f"Balance: {currency}{transfer_balance}\n"
 
             with open(f"{account_name}.txt", "w") as f:
                 f.writelines(lines)
@@ -173,8 +181,7 @@ def transfer(transfer_name, transfer_iban, transfer_amount):
                 f.writelines(transfer_lines)
 
             clear()
-            print(
-                f"You have successfully transferred ${transfer_amount} to {transfer_name}.")
+            print(f"You have successfully transferred {currency}{transfer_amount} to {transfer_name}.")
 
         else:
             clear()
@@ -198,7 +205,7 @@ def main():
             create_account(
                 str(input("Enter your full name: ")),
                 str(input("Enter your birthday: ")),
-                int(input("Enter your balance: $")),
+                int(input(f"Enter your balance: ")),
                 str(input("Enter the region you live in: "))
             )
 
