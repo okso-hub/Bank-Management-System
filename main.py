@@ -17,9 +17,9 @@ def create_account(name, birthday, balance, address):
     iban = ""
     for i in range(22):
         iban += str(randint(0, 9))
-    if address == "Germany":
+    if address.lower() == "Germany":
         IBAN = f"DE {int(iban)}"
-    elif address == "USA" or "US" or "America":
+    elif address.lower()== "USA" or "US" or "America":
         IBAN = f"US {int(iban)}"
     
     # Choosing the currency
