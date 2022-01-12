@@ -19,7 +19,7 @@ def create_account(name, birthday, balance, address):
         iban += str(randint(0, 9))
     if address.lower() == "Germany":
         IBAN = f"DE {int(iban)}"
-    elif address.lower()== "USA" or "US" or "America":
+    elif address.lower() == "USA" or "US" or "America":
         IBAN = f"US {int(iban)}"
     
     # Choosing the currency
@@ -54,6 +54,7 @@ def log_in(name, input_code):
 
             balance_line = lines[4]
             split_balance_line = balance_line.split(" ")
+            currency = split_balance_line[1][0]
             balance = split_balance_line[1].replace("\n", "").replace(f"{currency}", "")
 
             code_line = lines[3]
@@ -205,7 +206,7 @@ def main():
             create_account(
                 str(input("Enter your full name: ")),
                 str(input("Enter your birthday: ")),
-                int(input(f"Enter your balance: ")),
+                int(input("Enter your balance: ")),
                 str(input("Enter the region you live in: "))
             )
 
