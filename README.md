@@ -3,7 +3,7 @@
 This program resembles an ATM. It features options such as:
 
 - [x] Registration
-- [x] Loggin into an account
+- [x] Logging into an account
 - [x] Withdraw money from an account
 - [x] Desposit money to an account
 - [x] Changing the login code

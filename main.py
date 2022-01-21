@@ -47,6 +47,8 @@ def log_in(name, input_code):
     global account_name
     account_name = name
 
+    global currency
+
     # Reading and outputting the information
     try:
         with open(f"{name}.txt", "r") as f:
