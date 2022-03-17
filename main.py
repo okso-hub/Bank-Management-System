@@ -17,9 +17,9 @@ def create_account(name, birthday, balance, address):
     iban = ""
     for i in range(22):
         iban += str(randint(0, 9))
-    if address.lower() == "Germany":
+    if address.lower() == "germany":
         IBAN = f"DE {int(iban)}"
-    elif address.lower() == "USA" or "US" or "America":
+    elif address.lower() == "usa" or "us" or "america":
         IBAN = f"US {int(iban)}"
     
     # Choosing the currency
@@ -30,7 +30,7 @@ def create_account(name, birthday, balance, address):
         currency = "$"
 
     # Saving information on a textfile
-    with open(f"{name}.txt", "w") as f:
+    with open(f"accounts/{name}.txt", "w") as f:
         f.write(f"Name: {name}\n")
         f.write(f"Date of birth: {birthday}\n")
         f.write(f"Address: {address}\n")
@@ -51,7 +51,7 @@ def log_in(name, input_code):
 
     # Reading and outputting the information
     try:
-        with open(f"{name}.txt", "r") as f:
+        with open(f"accounts/{name}.txt", "r") as f:
             lines = f.readlines()
 
             balance_line = lines[4]
@@ -74,7 +74,7 @@ def log_in(name, input_code):
 
 def withdraw(withdraw_amount):
     # Reading the balance from textfile
-    with open(f"{account_name}.txt", "r") as f:
+    with open(f"accounts/{account_name}.txt", "r") as f:
         lines = f.readlines()
 
         balance_line = lines[4]
@@ -88,7 +88,7 @@ def withdraw(withdraw_amount):
     # Updating balance on textfile
     lines[4] = f"Balance: {currency}{int_balance}\n"
 
-    with open(f"{account_name}.txt", "w") as f:
+    with open(f"accounts/{account_name}.txt", "w") as f:
         f.writelines(lines)
 
     # Outputting balance
@@ -98,7 +98,7 @@ def withdraw(withdraw_amount):
 
 def deposit(deposit_amount):
     # Reading the balance from textfile
-    with open(f"{account_name}.txt", "r") as f:
+    with open(f"accounts/{account_name}.txt", "r") as f:
         lines = f.readlines()
 
         balance_line = lines[4]
@@ -112,7 +112,7 @@ def deposit(deposit_amount):
     # Updating balance on textfile
     lines[4] = f"Balance: {currency}{int_balance}\n"
 
-    with open(f"{account_name}.txt", "w") as f:
+    with open(f"accounts/{account_name}.txt", "w") as f:
         f.writelines(lines)
 
     # Outputting balance
@@ -122,7 +122,7 @@ def deposit(deposit_amount):
 
 def change_code(old_code):
     # Reading the code from the textfile
-    with open(f"{account_name}.txt", "r") as f:
+    with open(f"accounts/{account_name}.txt", "r") as f:
         lines = f.readlines()
 
         code_line = lines[3]
@@ -134,7 +134,7 @@ def change_code(old_code):
         new_code = int(input("Enter your new code: "))
         lines[3] = f"Code: {new_code}\n"
 
-        with open(f"{account_name}.txt", "w") as f:
+        with open(f"accounts/{account_name}.txt", "w") as f:
             f.writelines(lines)
 
         clear()
@@ -145,7 +145,7 @@ def change_code(old_code):
 
 
 def view_information():
-    with open(f"{account_name}.txt", "r") as f:
+    with open(f"accounts/{account_name}.txt", "r") as f:
         content = f.read()
 
     clear()
@@ -153,14 +153,14 @@ def view_information():
 
 
 def transfer(transfer_name, transfer_iban, transfer_amount):
-    with open(f"{account_name}.txt", "r") as f:
+    with open(f"accounts/{account_name}.txt", "r") as f:
         lines = f.readlines()
         balance_line = lines[4]
         split_balance_line = balance_line.split(" ")
         balance = int(split_balance_line[1].replace("\n", "").replace(f"{currency}", ""))
 
     try:
-        with open(f"{transfer_name}.txt", "r") as f:
+        with open(f"accounts/{transfer_name}.txt", "r") as f:
             transfer_lines = f.readlines()
             iban_line = transfer_lines[5]
             split_iban_line = iban_line.split(" ")
@@ -177,10 +177,10 @@ def transfer(transfer_name, transfer_iban, transfer_amount):
             transfer_balance += transfer_amount
             transfer_lines[4] = f"Balance: {currency}{transfer_balance}\n"
 
-            with open(f"{account_name}.txt", "w") as f:
+            with open(f"accounts/{account_name}.txt", "w") as f:
                 f.writelines(lines)
 
-            with open(f"{transfer_name}.txt", "w") as f:
+            with open(f"accounts/{transfer_name}.txt", "w") as f:
                 f.writelines(transfer_lines)
 
             clear()
