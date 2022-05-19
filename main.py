@@ -1,5 +1,6 @@
 from random import randint
 import os
+from simple_term_menu import TerminalMenu
 
 
 def clear(): return os.system("clear") if os.name == "posix" else os.system("cls")
@@ -28,6 +29,8 @@ def create_account(name, birthday, balance, address):
         currency = "€"
     elif address.lower() == "usa" or "us" or "america":
         currency = "$"
+    elif address.lower() == "uk" or "britain" or "england":
+        currency = "£"
 
     # Saving information on a textfile
     with open(f"accounts/{name}.txt", "w") as f:
@@ -197,13 +200,14 @@ def transfer(transfer_name, transfer_iban, transfer_amount):
 
 
 def main():
+    options = ["Create new account", "Log into an existing account", "Quit ATM"]
+    terminal_menu = TerminalMenu(options)
     while True:
         clear()
         print("--- ATM Please select an option to continue ---")
-        print("1. Create a new account \n2. Log in to an existing account\n3. Quit ATM")
-        mode = int(input(""))
+        menu_entry_index = terminal_menu.show()
 
-        if mode == 1:
+        if menu_entry_index == 0:
             clear()
             create_account(
                 str(input("Enter your full name: ")),
@@ -236,7 +240,7 @@ def main():
                 elif option == 6:
                     logged_in = False
 
-        elif mode == 2:
+        elif menu_entry_index == 1:
             clear()
             log_in(
                 str(input("Enter your full name: ")),
@@ -267,7 +271,7 @@ def main():
                 elif option == 6:
                     logged_in = False
 
-        elif mode == 3:
+        elif menu_entry_index == 2:
             break
 
 
