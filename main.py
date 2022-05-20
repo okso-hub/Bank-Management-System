@@ -1,5 +1,6 @@
 from random import randint
 import os
+from time import sleep
 from simple_term_menu import TerminalMenu
 
 
@@ -31,6 +32,10 @@ def create_account(name, birthday, balance, address):
         currency = "$"
     elif address.lower() == "uk" or "britain" or "england":
         currency = "£"
+
+    # Setting a global account name for login
+    global account_name
+    account_name = name
 
     # Saving information on a textfile
     with open(f"accounts/{name}.txt", "w") as f:
@@ -66,10 +71,13 @@ def log_in(name, input_code):
             split_code_line = code_line.split(" ")
             code = int(split_code_line[1])
 
+        global LOG
         if input_code == code:
+            LOG = True
             clear()
             print(f"Success. Welcome, {name} your balance is {currency}{balance}.")
         else:
+            LOG = False
             print("Failure. Wrong code.")
     except:
         print("Account does not exist.")
@@ -217,27 +225,27 @@ def main():
             )
 
             logged_in = True
-
+            logged_options = ["Withdraw money from your bank account", "Deposit money to your bank account", "Change code", "View account information", "Transfer money", "Log out"]
+            logged_index = TerminalMenu(logged_options)
             while logged_in:
                 print("--- ATM Please select an option to continue ---")
-                print("1. Withdraw money from your bank account \n2. Deposit money to your bank account \n3. Change code \n4. View account information \n5. Transfer money \n6. Log out")
-                option = int(input(""))
+                logged_index_entry = logged_index.show()
 
-                if option == 1:
+                if logged_index_entry == 0:
                     withdraw(int(input("Enter your withdraw amount: ")))
-                elif option == 2:
+                elif logged_index_entry == 1:
                     deposit(int(input("Enter your deposit amount: ")))
-                elif option == 3:
+                elif logged_index_entry == 2:
                     change_code(int(input("Enter your current code: ")))
-                elif option == 4:
+                elif logged_index_entry == 3:
                     view_information()
-                elif option == 5:
+                elif logged_index_entry == 4:
                     transfer(
                         str(input("Enter name of destination account: ")),
                         int(input("Enter IBAN of destination account: ")),
                         int(input("Enter transfer amount: "))
                     )
-                elif option == 6:
+                elif logged_index_entry == 5:
                     logged_in = False
 
         elif menu_entry_index == 1:
@@ -246,29 +254,33 @@ def main():
                 str(input("Enter your full name: ")),
                 int(input("Enter your code: "))
             )
+            logged_in = True if LOG else False
+            if not logged_in:
+                clear()
+                print("Wrong code. You will be redirected to the main menu.")
+                sleep(3.5)
 
-            logged_in = True
-
+            logged_options = ["Withdraw money from your bank account", "Deposit money to your bank account", "Change code", "View account information", "Transfer money", "Log out"]
+            logged_index = TerminalMenu(logged_options)
             while logged_in:
                 print("--- ATM Please select an option to continue ---")
-                print("1. Withdraw money from your bank account \n2. Deposit money to your bank account \n3. Change code \n4. View account information \n5. Transfer money \n6. Log out")
-                option = int(input(""))
+                logged_entry_index = logged_index.show()
 
-                if option == 1:
+                if logged_entry_index == 0:
                     withdraw(int(input("Enter your withdraw amount: ")))
-                elif option == 2:
+                elif logged_entry_index == 1:
                     deposit(int(input("Enter your deposit amount: ")))
-                elif option == 3:
+                elif logged_entry_index == 2:
                     change_code(int(input("Enter your current code: ")))
-                elif option == 4:
+                elif logged_entry_index == 3:
                     view_information()
-                elif option == 5:
+                elif logged_entry_index == 4:
                     transfer(
                         str(input("Enter name of destination account: ")),
                         int(input("Enter IBAN of destination account: ")),
                         int(input("Enter transfer amount: "))
                     )
-                elif option == 6:
+                elif logged_entry_index == 5:
                     logged_in = False
 
         elif menu_entry_index == 2:
