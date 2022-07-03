@@ -11,13 +11,13 @@ def create_account(name, birthday, balance, address):
     # Generating the login code
     global code
     code = ""
-    for i in range(4):
+    for _ in range(4):
         code += str(randint(0, 9))
     int(code)
 
     # Generating the IBAN
     iban = ""
-    for i in range(22):
+    for _ in range(22):
         iban += str(randint(0, 9))
     if address.lower() == "germany":
         IBAN = f"DE {int(iban)}"
@@ -142,7 +142,7 @@ def change_code(old_code):
 
     # Checking if the the user knows the current code
     if old_code == int(code):
-        new_code = int(input("Enter your new code: "))
+        new_code = str(input("Enter your new code: "))
         lines[3] = f"Code: {new_code}\n"
 
         with open(f"accounts/{account_name}.txt", "w") as f:
